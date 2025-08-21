@@ -1,5 +1,7 @@
+
 from flask import Flask, Response
 import requests
+import re
 
 app = Flask(__name__)
 
@@ -21,10 +23,11 @@ def serve_ical(team):
         return "Team niet gevonden", 404
     try:
         data = requests.get(url).text
-        if "X-WR-CALNAME:" in data:
-            data = data.replace("X-WR-CALNAME:", f"X-WR-CALNAME:{name}")
-        else:
-            data = data.replace("BEGIN:VCALENDAR", f"BEGIN:VCALENDAR\nX-WR-CALNAME:{name}")
+        # Verwijder bestaande X-WR-CALNAME regels
+        data = re.sub(r'X-WR-CALNAME:.*', '', data)
+        # Voeg correcte ploegnaam toe
+        data = data.replace("BEGIN:VCALENDAR", f"BEGIN:VCALENDAR
+X-WR-CALNAME:{name}")
         return Response(data, mimetype="text/calendar")
     except Exception as e:
         return f"Fout bij ophalen van kalender: {str(e)}", 500

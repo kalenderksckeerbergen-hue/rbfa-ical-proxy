@@ -9,6 +9,7 @@ Deze Flask-app biedt aangepaste iCal-feeds voor 8 RBFA-teams met correcte ploegn
 2. Ga naar [Render](https://render.com) en kies "New Web Service".
 3. Kies "Deploy from GitHub" en selecteer je repository.
 4. Stel de build en start command in:
+   - **Build command**: `pip install -r requirements.txt`
    - **Start command**: `gunicorn app:app`
 
 ## Gebruik
