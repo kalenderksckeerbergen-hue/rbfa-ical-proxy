@@ -1,4 +1,3 @@
-
 from flask import Flask, Response
 import requests
 
@@ -25,8 +24,7 @@ def serve_ical(team):
         if "X-WR-CALNAME:" in data:
             data = data.replace("X-WR-CALNAME:", f"X-WR-CALNAME:{name}")
         else:
-            data = data.replace("BEGIN:VCALENDAR", f"BEGIN:VCALENDAR
-X-WR-CALNAME:{name}")
+            data = data.replace("BEGIN:VCALENDAR", f"BEGIN:VCALENDAR\nX-WR-CALNAME:{name}")
         return Response(data, mimetype="text/calendar")
     except Exception as e:
         return f"Fout bij ophalen van kalender: {str(e)}", 500
