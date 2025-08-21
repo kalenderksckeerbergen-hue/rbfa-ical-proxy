@@ -26,11 +26,11 @@ def serve_ical(team):
         # Verwijder bestaande X-WR-CALNAME regels
         data = re.sub(r'X-WR-CALNAME:.*', '', data)
         # Voeg correcte ploegnaam toe
-        data = data.replace("BEGIN:VCALENDAR", f"BEGIN:VCALENDAR
-X-WR-CALNAME:{name}")
+        data = data.replace("BEGIN:VCALENDAR", "BEGIN:VCALENDAR
+X-WR-CALNAME:" + name)
         return Response(data, mimetype="text/calendar")
     except Exception as e:
-        return f"Fout bij ophalen van kalender: {str(e)}", 500
+        return "Fout bij ophalen van kalender: " + str(e), 500
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
